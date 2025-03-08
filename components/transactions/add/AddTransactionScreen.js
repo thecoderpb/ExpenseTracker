@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  Modal, // No need to import separately from react-native
+  Modal,
   Alert,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -18,22 +18,21 @@ import styles from "./styles";
 const AddTransactionScreen = ({ route, navigation }) => {
   const { handleAddTransaction } = route.params;
 
+  // State variables for form inputs
   const [date, setDate] = useState(new Date());
-  const [amount, setAmount] = useState(123);
-  const [description, setDescription] = useState("sdf");
-  const [location, setLocation] = useState("fghf");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
   const [transactionType, setTransactionType] = useState("Credit");
   const [category, setCategory] = useState("Shopping");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTypePicker, setShowTypePicker] = useState(false);
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
+  // Form validation
   const validateForm = () => {
     if (!amount || !description || !location) {
-      Alert.alert(
-        "Validation Error",
-        "Please fill in all the required fields."
-      );
+      Alert.alert("Validation Error", "Please fill in all the required fields.");
       return false;
     }
 
@@ -44,6 +43,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
     return true;
   };
 
+  // Add transaction to the list
   const addTransaction = () => {
     if (validateForm()) {
       const newItem = {
@@ -56,7 +56,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
         date: date.toDateString(),
       };
       handleAddTransaction(newItem);
-      alert("Transaction Added");
+      Alert.alert("Success", "Transaction Added");
       navigation.goBack();
     }
   };
@@ -70,6 +70,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
+        {/* Date picker */}
         <Text style={styles.label}>Select Date:</Text>
         <TouchableOpacity
           style={styles.input}
@@ -79,7 +80,6 @@ const AddTransactionScreen = ({ route, navigation }) => {
         </TouchableOpacity>
 
         {/* Date Picker Modal */}
-
         <DateTimePickerModal
           isVisible={showDatePicker}
           mode="date"
@@ -90,7 +90,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
           }}
           onCancel={() => setShowDatePicker(false)}
         />
-
+        {/* Amount input */}
         <Text style={styles.label}>Amount:</Text>
         <TextInput
           style={styles.input}
@@ -103,6 +103,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
           placeholder="Enter amount"
         />
 
+        {/* Description input */}
         <Text style={styles.label}>Description:</Text>
         <TextInput
           style={styles.input}
@@ -111,6 +112,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
           placeholder="Enter details"
         />
 
+        {/* Location input */}
         <Text style={styles.label}>Location:</Text>
         <TextInput
           style={styles.input}
@@ -119,6 +121,7 @@ const AddTransactionScreen = ({ route, navigation }) => {
           placeholder="Enter location"
         />
 
+        {/* Transaction Type selection */}
         <Text style={styles.label}>Transaction Type:</Text>
         <TouchableOpacity
           style={styles.input}
@@ -139,11 +142,14 @@ const AddTransactionScreen = ({ route, navigation }) => {
                 <Picker.Item label="Debit" value="Debit" />
                 <Picker.Item label="Refund" value="Refund" />
               </Picker>
-              <Button title="Done" onPress={() => setShowTypePicker(false)} />
+              <TouchableOpacity onPress={() => setShowTypePicker(false)}>
+                <Text style={styles.buttonText}>Done</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
 
+        {/* Category selection */}
         <Text style={styles.label}>Category:</Text>
         <TouchableOpacity
           style={styles.input}
@@ -164,15 +170,14 @@ const AddTransactionScreen = ({ route, navigation }) => {
                 <Picker.Item label="Travel" value="Travel" />
                 <Picker.Item label="Utility" value="Utility" />
               </Picker>
-              <Button
-                title="Done"
-                onPress={() => setShowCategoryPicker(false)}
-              />
+              <TouchableOpacity onPress={() => setShowCategoryPicker(false)}>
+                <Text style={styles.buttonText}>Done</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
 
-        {/* Styled Add Transaction Button */}
+        {/* Add Transaction Button */}
         <TouchableOpacity style={styles.addButton} onPress={addTransaction}>
           <Text style={styles.addButtonText}>Add Transaction</Text>
         </TouchableOpacity>

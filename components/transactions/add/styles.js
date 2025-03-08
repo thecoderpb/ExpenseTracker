@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+// Styles for the AddTransactionScreen component
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -44,5 +45,12 @@ export default StyleSheet.create({
     padding: 20,
     width: '80%',
     borderRadius: 10,
+  },
+  buttonText: {
+    color: '#007BFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,49 +8,54 @@ import {
 } from "react-native";
 import styles from "./styles";
 
-const DashboardScreen = ({ route, navigation }) => {
+const DashboardScreen = ({ navigation }) => {
   const [transactions, setTransactions] = useState([]);
 
+  // Function to add a new transaction to the list
   const handleAddTransaction = (newTransaction) => {
-    console.log("Adding new transaction:", newTransaction);
     setTransactions([...transactions, newTransaction]);
   };
-
-  useEffect(() => {
-    console.log('updated: ', transactions);
-  }, [transactions]);
+  
 
   return (
     <SafeAreaView style={styles.container}>
-      {transactions.length === 0 ? (
-        <Text style={styles.noTransactions}>No transactions found</Text>
-      ) : (
-        <FlatList
-          data={transactions}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.transactionItem}
-              onPress={() =>
-                navigation.navigate("TransactionDetail", { transaction: item })
-              }
-            >
-              <Text style={styles.transactionText}>
-                {item.description} - ${item.amount}
-              </Text>
-            </TouchableOpacity>
-          )}
-          />
+      <View>
+      {
+  transactions.length ? (
+    <FlatList
+      data={transactions}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.transactionItem}
+          onPress={() =>
+            navigation.navigate("TransactionDetail", {
+              transaction: item,
+            })
+          }
+        >
+          <Text style={styles.transactionText}>
+            {item.description} - ${item.amount}
+          </Text>
+        </TouchableOpacity>
       )}
+    />
+  ) : (
+    <Text style={styles.emptyList}>No transactions found</Text>
+  )
+}
 
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() =>
-          navigation.navigate("AddTransaction", { handleAddTransaction })
-        }
-      >
-        <Text style={styles.buttonText}>+ Add Transaction</Text>
-      </TouchableOpacity>
+
+        {/* Button to navigate to AddTransaction screen, passing the add function */}
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() =>
+            navigation.navigate("AddTransaction", { handleAddTransaction })
+          }
+        >
+          <Text style={styles.buttonText}>+ Add Transaction</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

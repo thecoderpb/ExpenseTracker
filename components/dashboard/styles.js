@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+// Styles for the DashboardScreen component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,9 +41,11 @@ const styles = StyleSheet.create({
   addButton: {
     backgroundColor: '#007bff',
     paddingVertical: 15,
+    marginLeft: 20,
+    marginRight: 20,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 25,
+    marginTop: 15,
   },
   logoutButton: {
     backgroundColor: 'red',
@@ -55,6 +58,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  emptyList: {
+    textAlign: 'center',
+    fontSize: 18,
+    
+    color: '#888',
+    marginTop: 20,
   },
 });
 

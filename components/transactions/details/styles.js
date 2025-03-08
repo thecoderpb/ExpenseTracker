@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+// Styles for the TransactionDetailScreen component
 const styles = StyleSheet.create({
     container: {
       flex: 1,
